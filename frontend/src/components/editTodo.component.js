@@ -1,6 +1,9 @@
 import React from "react";
 
 class EditTodo extends React.Component{
+    constructor(props){
+        super(props)
+    }
     render(){
         return(
             <div>

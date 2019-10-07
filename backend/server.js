@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const todoRoutes = express.Router();
-const PORT = 4000;
+
+//Dynamically allow to port to use the environment variable to the port OR the predefined port if the process variable is undefined
+const PORT = process.env.PORT || 4000;
 
 let Todo = require('./todo.model');
 

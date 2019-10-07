@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+// Use import * as $ from 'axios' in order to do your API calls with the standard $.get(url)
 
 const Todo = props => (
   <tr>
@@ -20,6 +20,9 @@ class TodoList extends React.Component {
     this.state = { todos: [] };
   }
   componentDidMount() {
+    //Only use the full URL if you are calling an external API. For ones used with your application, just do axios.get(/todos/)
+    //axios should automatically use the base url from the application or from the browser
+    //If you were to push this in a production environment, this API call would not work. The other way is dynamic.
     axios
       .get("http://localhost:4000/todos/")
       .then(response => {
@@ -30,6 +33,7 @@ class TodoList extends React.Component {
       });
   }
   todoList() {
+    //wrap this in an if(this.state.todos.length > 0){then map} . If you try to map an undefined variable then you will get an error.
     return this.state.todos.map(function(currentTodo, i) {
       return <Todo todo={currentTodo} key={i} />;
     });

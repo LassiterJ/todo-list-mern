@@ -1,0 +1,9 @@
+
+- .gitignore is relative to its path. /node_modules doesn’t exist since .gitignore is in the master repo. 
+    It should be /frontend/node_modules and /backend/node_modules
+- Also, I would not have seperate folders for front vs back end. 
+    I would have a public folder in the master repo that housed your front end components 
+    but your server and main package.json should be in the master directory as well.
+
+- I don't have mongodb installed, and I don't want to go through all of that since I never use it. 
+    So I can't actually launch your app but I will make notes where I can without having to run it.

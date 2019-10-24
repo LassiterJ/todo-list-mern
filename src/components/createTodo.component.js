@@ -1,15 +1,15 @@
 import React from "react";
-import axios from "axios";
+import * as $ from "axios";
 
 class CreateTodo extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
-    this.onChangeTodoResponsibility = this.onChangeTodoResponsibility.bind(
-      this
-    );
-    this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
+    // this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
+    // this.onChangeTodoResponsibility = this.onChangeTodoResponsibility.bind(
+    //   this
+    // );
+    // this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -23,28 +23,36 @@ class CreateTodo extends React.Component {
       // settings (how long until completed todo dissapears?)
     };
   }
-  onChangeTodoDescription(event) {
+
+  onChange = (event)=>{
+    console.log(event)
+
     this.setState({
-      todoDescription: event.target.value
-    });
+      [event.target.name]:event.target.value
+    })
   }
-  onChangeTodoResponsibility(event) {
-    this.setState({
-      todoResponsibility: event.target.value
-    });
-  }
-  onChangeTodoPriority(event) {
-    this.setState({
-      todoPriority: event.target.value
-    });
-  }
+  // onChangeTodoDescription(event) {
+  //   this.setState({
+  //     todoDescription: event.target.value
+  //   });
+  // }
+  // onChangeTodoResponsibility(event) {
+  //   this.setState({
+  //     todoResponsibility: event.target.value
+  //   });
+  // }
+  // onChangeTodoPriority(event) {
+  //   this.setState({
+  //     todoPriority: event.target.value
+  //   });
+  // }
   onSubmit(event) {
     event.preventDefault();
 
-    console.log("Form Submitted");
-    console.log(`New Todo Description: ${this.state.todoDescription}`);
-    console.log(`New Todo Responsibility: ${this.state.todoResponsibility}`);
-    console.log(`New Todo Priority: ${this.state.todoPriority}`);
+    
+    // console.log(`New Todo Description: ${this.state.todoDescription}`);
+    // console.log(`New Todo Responsibility: ${this.state.todoResponsibility}`);
+    // console.log(`New Todo Priority: ${this.state.todoPriority}`);
 
     const newTodo = {
       todoDescription: this.state.todoDescription,
@@ -53,21 +61,21 @@ class CreateTodo extends React.Component {
       todoCompleted: this.state.todoCompleted,
       
     };
-    axios
-      .post("http://localhost:4000/todos/add", newTodo)
+    $.post("http://localhost:4000/todos/add", newTodo)
       .then(res => {
         this.props.onSubmitNew();
         
-      });
+      }).then(this.setState({
+        todoDescription: "",
+        todoResponsibility: "",
+        todoPriority: "",
+        todoCompleted: false,
+        
+      })
+      );
       
 
-    this.setState({
-      todoDescription: "",
-      todoResponsibility: "",
-      todoPriority: "",
-      todoCompleted: false,
-      
-    });
+    
   }
   render() {
     return (
@@ -77,25 +85,28 @@ class CreateTodo extends React.Component {
           <label>
             Description
             <textarea
+              name= 'todoDescription'
               value={this.state.todoDescription}
-              onChange={this.onChangeTodoDescription}
+              onChange={this.onChange}
               placeholder="describe your todo here "
             />
           </label>
           <label>
             Responsibility
             <input
+              name= 'todoResponsibility'
               value={this.state.todoResponsibility}
               type="text"
               placeholder="Who's task is it?"
-              onChange={this.onChangeTodoResponsibility}
+              onChange={this.onChange}
             />
           </label>
           <label>
             Priority
             <select
+              name= 'todoPriority'
               value={this.state.todoPriority}
-              onChange={this.onChangeTodoPriority}
+              onChange={this.onChange}
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -103,7 +114,7 @@ class CreateTodo extends React.Component {
               <option value="top">Top</option>
             </select>
           </label>
-          <input type="submit" value="Create Todo" />
+          <input name= 'submit' type="submit" value="Create Todo" />
         </form>
       </div>
     );

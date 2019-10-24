@@ -1,6 +1,6 @@
 import React from "react";
 import Todo from "../components/todo.component";
-import axios from "axios";
+import * as $ from "axios";
 import Modal from "../components/modal.component";
 import CreateTodo from "./createTodo.component";
 import EditTodo from "./editTodo.component";
@@ -11,9 +11,9 @@ class TodoList extends React.Component {
     this.state = { todos: [], modalData: {} };
   }
   
+  // Josh, I can't seem to get the relative path to work instead of the direct link. Any ideas?)
   componentDidMount() {
-    axios
-      .get("http://localhost:4000/todos/")
+    $.get('http://localhost:4000/todos')
       .then(res => {
         this.setState({ todos: res.data });
       })
@@ -29,7 +29,7 @@ class TodoList extends React.Component {
     });
   };
   onCreateNewTodoSubmitClick = () => {
-    axios.get("http://localhost:4000/todos/").then(res => {
+    $.get("http://localhost:4000/todos/").then(res => {
       console.log("db response: ", res.data);
       this.setState({
         todos: res.data,
@@ -51,18 +51,16 @@ class TodoList extends React.Component {
   };
 
   editOnSubmit = todoId => {
-    console.log("Beginning of editOnSubmit in todoList component");
-    axios.get("http://localhost:4000/todos/" + todoId).then(res => {
+    
+    $.get("http://localhost:4000/todos/" + todoId).then(res => {
       const updatedTodo = res.data;
-      console.log("db response: ", res.data);
       const arrayCopy = this.state.todos.map(currentTodo => {
-        console.log("updatedTodo: ", updatedTodo);
         if (updatedTodo._id === currentTodo._id) {
           return updatedTodo;
         }
         return currentTodo;
       });
-      console.log("arrayCopy: ", arrayCopy);
+      
       this.setState({
         todos: arrayCopy,
         modalData: {}
@@ -75,7 +73,7 @@ class TodoList extends React.Component {
   delete = todoId => {
     const arrayCopy = this.state.todos.filter(todo => todo._id !== todoId);
 
-    axios.delete("http://localhost:4000/todos/" + todoId).catch(error => {
+    $.delete("http://localhost:4000/todos/" + todoId).catch(error => {
       console.log(error);
     });
 
@@ -112,7 +110,7 @@ class TodoList extends React.Component {
         </Modal>
       );
     }
-    const list = this.state.todos.map((currentTodo, i) => {
+    const list = this.state.todos.length > 0 ? this.state.todos.map((currentTodo, i) => {
       return (
         <Todo
           delete={this.delete}
@@ -121,7 +119,7 @@ class TodoList extends React.Component {
           key={i}
         />
       );
-    });
+    }):"No Todos Found!";
 
     return (
       <div className="container">

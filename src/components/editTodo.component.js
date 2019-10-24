@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import * as $ from "axios";
 
 
 // Thinking I may have to lift the state...
@@ -33,7 +33,7 @@ class EditTodo extends React.Component {
         todoCompleted: this.state.todoCompleted
     };
     // have in server.js that the update api call is a post not put. look into this later
-    axios.put('http://localhost:4000/todos/update/'+this.props.currentTodo.todo._id, obj)
+    $.put('http://localhost:4000/todos/update/'+this.props.currentTodo.todo._id, obj)
         .then(res => 
           {console.log("editTodo onSubmit update response: ",res.data);
           this.props.submitEdit(this.props.currentTodo.todo._id);

@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import CreateTodo from "../src/components/createTodo.component";
-import EditTodo from "../src/components/editTodo.component";
 import TodoList from "../src/components/todoList.component";
 
 class App extends React.Component {

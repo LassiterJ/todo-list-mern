@@ -4,12 +4,6 @@ import * as $ from "axios";
 class CreateTodo extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
-    // this.onChangeTodoResponsibility = this.onChangeTodoResponsibility.bind(
-    //   this
-    // );
-    // this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -25,34 +19,13 @@ class CreateTodo extends React.Component {
   }
 
   onChange = (event)=>{
-    console.log(event)
-
     this.setState({
       [event.target.name]:event.target.value
     })
   }
-  // onChangeTodoDescription(event) {
-  //   this.setState({
-  //     todoDescription: event.target.value
-  //   });
-  // }
-  // onChangeTodoResponsibility(event) {
-  //   this.setState({
-  //     todoResponsibility: event.target.value
-  //   });
-  // }
-  // onChangeTodoPriority(event) {
-  //   this.setState({
-  //     todoPriority: event.target.value
-  //   });
-  // }
+  
   onSubmit(event) {
     event.preventDefault();
-
-    
-    // console.log(`New Todo Description: ${this.state.todoDescription}`);
-    // console.log(`New Todo Responsibility: ${this.state.todoResponsibility}`);
-    // console.log(`New Todo Priority: ${this.state.todoPriority}`);
 
     const newTodo = {
       todoDescription: this.state.todoDescription,
@@ -73,9 +46,6 @@ class CreateTodo extends React.Component {
         
       })
       );
-      
-
-    
   }
   render() {
     return (

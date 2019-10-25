@@ -21,20 +21,32 @@ class TodoList extends React.Component {
         console.log(error);
       });
   }
-
+// SET STATE
+  setTheState = (data)=>{
+    console.log("MADE IT TO SET STATE")
+    if (Array.isArray(data)){
+      data.forEach(obj => {
+        this.setState({
+          [obj.name] : obj.value
+        })
+      });
+    }else{
+      console.log("SET STATE DATA NOT AN ARRAY OF OBJECTS")
+    }
+    
+  }
+// END SET STATE
   // CREATE -------------------------------------------------------------------
   createTodoClick = () => {
-    this.setState({
-      modalData: { todo: "new" }
-    });
+    const modalData = [{name: 'modalData',
+                      value: {todo:'new'}}];
+    this.setTheState(modalData);
   };
+
   onCreateNewTodoSubmitClick = () => {
     $.get("http://localhost:4000/todos/").then(res => {
-      console.log("db response: ", res.data);
-      this.setState({
-        todos: res.data,
-        modalData: {}
-      });
+      const submitData = [{name: 'todos', value: res.data},{name:'modalData', value: {}}]
+      this.setTheState(submitData);
     });
   };
 
@@ -42,12 +54,9 @@ class TodoList extends React.Component {
 
   // EDIT----------------------------------------------------------------------
   editOnClick = currentTodo => {
-    console.log("EditOnClick triggered");
-
-    // set state of modal
-    this.setState({
-      modalData: { todo: currentTodo }
-    });
+    // Set the state of Modal
+    const stateModalData = [{name: 'modalData', value: {todo: currentTodo}}]
+    this.setTheState(stateModalData);
   };
 
   editOnSubmit = todoId => {
@@ -60,11 +69,9 @@ class TodoList extends React.Component {
         }
         return currentTodo;
       });
-      
-      this.setState({
-        todos: arrayCopy,
-        modalData: {}
-      });
+      const stateData = [{name:"todos", value: arrayCopy}, {name:"modalData", value:{}}]
+      console.log("stateData editOnSubmit: ", stateData);
+      this.setTheState(stateData);
     });
 
     console.log("END of todoList's editOnSubmit function");
@@ -91,7 +98,6 @@ class TodoList extends React.Component {
   // END MODAL ------------------------------------------------------------------
   render() {
     const modalData = this.state.modalData;
-    console.log("modalData: ", modalData);
     let modal;
 
     if (this.state.modalData.todo === "new") {

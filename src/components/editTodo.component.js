@@ -8,9 +8,7 @@ class EditTodo extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
-    this.onChangeTodoResponsibility = this.onChangeTodoResponsibility.bind(this);
-    this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
+    
     this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -21,9 +19,19 @@ class EditTodo extends React.Component {
       todoCompleted: this.props.currentTodo.todo.todoCompleted
 
     };
-    console.log("this.props.todo editTodo: ", this.props.todo)
+    
   }
-  
+  onChange = (event) =>{
+      this.setState({
+        [event.target.name]:event.target.value
+      });
+  }
+  onChangeTodoCompleted() {
+    this.setState({
+      todoCompleted: !this.state.todoCompleted
+    });
+  }
+
   onSubmit = (event) => {
     event.preventDefault();
     const obj = {
@@ -32,36 +40,12 @@ class EditTodo extends React.Component {
         todoPriority: this.state.todoPriority,
         todoCompleted: this.state.todoCompleted
     };
-    // have in server.js that the update api call is a post not put. look into this later
-    $.put('http://localhost:4000/todos/update/'+this.props.currentTodo.todo._id, obj)
+   
+    $.post('http://localhost:4000/todos/update/'+this.props.currentTodo.todo._id, obj)
         .then(res => 
           {console.log("editTodo onSubmit update response: ",res.data);
           this.props.submitEdit(this.props.currentTodo.todo._id);
       });
-    // )
-}
-
-  onChangeTodoDescription(event) {
-    this.setState({
-      todoDescription: event.target.value
-    });
-  }
-
-  onChangeTodoResponsibility(event) {
-    this.setState({
-      todoResponsibility: event.target.value
-    });
-  }
-  onChangeTodoPriority(event) {
-    this.setState({
-      todoPriority: event.target.value
-    });
-  }
-
-  onChangeTodoCompleted() {
-    this.setState({
-      todoCompleted: !this.state.todoCompleted
-    });
   }
 
   render() {
@@ -72,26 +56,28 @@ class EditTodo extends React.Component {
           <label>
             Description
             <textarea
+              name="todoDescription"
               value={this.state.todoDescription ||  ''}
-              onChange={this.onChangeTodoDescription}
+              onChange={this.onChange}
               placeholder="describe your todo here "
             />
           </label>
           <label>
             Responsibility
             <input
+              name="todoResponsibility"
               value={this.state.todoResponsibility || ''}
               type="text"
-              name="todoResponsibility"
               placeholder="Who's task is it?"
-              onChange={this.onChangeTodoResponsibility}
+              onChange={this.onChange}
             />
           </label>
           <label>
             Priority
             <select
+              name="todoPriority"
               value={this.state.todoPriority || ''}
-              onChange={this.onChangeTodoPriority}
+              onChange={this.onChange}
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>

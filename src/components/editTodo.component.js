@@ -18,9 +18,10 @@ class EditTodo extends React.Component {
       todoPriority: this.props.currentTodo.todo.todoPriority,
       todoCompleted: this.props.currentTodo.todo.todoCompleted
 
-    };
-    
+    };  
   }
+
+  // SET STATE
   onChange = (event) =>{
       this.setState({
         [event.target.name]:event.target.value
@@ -32,6 +33,7 @@ class EditTodo extends React.Component {
     });
   }
 
+// SUBMIT
   onSubmit = (event) => {
     event.preventDefault();
     const obj = {
@@ -40,14 +42,14 @@ class EditTodo extends React.Component {
         todoPriority: this.state.todoPriority,
         todoCompleted: this.state.todoCompleted
     };
-   
+   console.log("this.props.currentTodo.todo._id: ", this.props.currentTodo.todo._id)
     $.post('http://localhost:4000/todos/update/'+this.props.currentTodo.todo._id, obj)
         .then(res => 
           {console.log("editTodo onSubmit update response: ",res.data);
           this.props.submitEdit(this.props.currentTodo.todo._id);
       });
   }
-
+// RENDER
   render() {
     return (
       <div>

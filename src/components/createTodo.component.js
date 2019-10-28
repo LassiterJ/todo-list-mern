@@ -36,8 +36,19 @@ class CreateTodo extends React.Component {
     };
     $.post("http://localhost:4000/todos/add", newTodo)
       .then(res => {
+        console.log(res.data);
         this.props.onSubmitNew();
         
+      }).catch(function(error){
+        if (error.response){
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
       }).then(this.setState({
         todoDescription: "",
         todoResponsibility: "",
@@ -58,7 +69,7 @@ class CreateTodo extends React.Component {
               name= 'todoDescription'
               value={this.state.todoDescription}
               onChange={this.onChange}
-              placeholder="describe your todo here "
+              placeholder="Describe your todo here "
             />
           </label>
           <label>

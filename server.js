@@ -13,6 +13,7 @@ let Todo = require('./todo.model');
 app.use(cors());
 app.use(bodyParser.json());
 
+
 mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true, useFindAndModify: false });
 const connection = mongoose.connection;
 
@@ -26,7 +27,6 @@ todoRoutes.route('/').get(function(req, res) {
             console.log(err);
         } else {
             res.json(todos);
-            
         }
     });
 });
@@ -61,7 +61,7 @@ todoRoutes.route('/add').post(function(req, res) {
     let todo = new Todo(req.body);
     todo.save()
         .then(todo => {
-            res.status(200).json({'todo': 'todo added successfully'});
+            res.status(200).json(`${todo}: todo added successfully`);
         })
         .catch(err => {
             res.status(400).send('adding new todo failed');
@@ -78,6 +78,7 @@ todoRoutes.route('/:id').delete(function(req, res){
         }
     });
 });
+
 
 app.use('/todos', todoRoutes);
 

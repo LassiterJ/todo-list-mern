@@ -10,57 +10,60 @@ class TodoList extends React.Component {
     super(props);
     this.state = { todos: [], modalData: {} };
   }
-  
-  // Josh, I can't seem to get the relative path to work instead of the direct link. Any ideas?)
+
   componentDidMount() {
-    $.get('http://localhost:4000/todos')
+    $.get("http://localhost:4000/todos/")
       .then(res => {
         this.setState({ todos: res.data });
       })
       .catch(function(error) {
-        console.log(error);
+        console.log("ComponentDidMount ERROR: ", error);
       });
   }
-// SET STATE
-  setTheState = (data)=>{
-    console.log("MADE IT TO SET STATE")
-    if (Array.isArray(data)){
+
+  // SET STATE ----------------------------------------------------------------
+  setTheState = data => {
+    if (Array.isArray(data)) {
       data.forEach(obj => {
         this.setState({
-          [obj.name] : obj.value
-        })
+          [obj.name]: obj.value
+        });
       });
-    }else{
-      console.log("SET STATE DATA NOT AN ARRAY OF OBJECTS")
+    } else {
+      console.log("SET STATE DATA NOT AN ARRAY OF OBJECTS");
     }
-    
-  }
-// END SET STATE
+  };
+
   // CREATE -------------------------------------------------------------------
+
   createTodoClick = () => {
-    const modalData = [{name: 'modalData',
-                      value: {todo:'new'}}];
+    const modalData = [{ name: "modalData", value: { todo: "new" } }];
     this.setTheState(modalData);
   };
 
   onCreateNewTodoSubmitClick = () => {
     $.get("http://localhost:4000/todos/").then(res => {
-      const submitData = [{name: 'todos', value: res.data},{name:'modalData', value: {}}]
+      const submitData = [
+        { name: "todos", value: res.data },
+        { name: "modalData", value: {} }
+      ];
       this.setTheState(submitData);
     });
   };
 
-  // END CREATE ---------------------------------------------------------------
+  //  -------------------------------------------------------------------------
 
   // EDIT----------------------------------------------------------------------
+
   editOnClick = currentTodo => {
     // Set the state of Modal
-    const stateModalData = [{name: 'modalData', value: {todo: currentTodo}}]
+    const stateModalData = [
+      { name: "modalData", value: { todo: currentTodo } }
+    ];
     this.setTheState(stateModalData);
   };
 
   editOnSubmit = todoId => {
-    
     $.get("http://localhost:4000/todos/" + todoId).then(res => {
       const updatedTodo = res.data;
       const arrayCopy = this.state.todos.map(currentTodo => {
@@ -69,14 +72,17 @@ class TodoList extends React.Component {
         }
         return currentTodo;
       });
-      const stateData = [{name:"todos", value: arrayCopy}, {name:"modalData", value:{}}]
+      const stateData = [
+        { name: "todos", value: arrayCopy },
+        { name: "modalData", value: {} }
+      ];
       console.log("stateData editOnSubmit: ", stateData);
       this.setTheState(stateData);
     });
 
     console.log("END of todoList's editOnSubmit function");
   };
-  // END EDIT -------------------------------------------------------------------
+  // END EDIT -----------------------------------------------------------------
   delete = todoId => {
     const arrayCopy = this.state.todos.filter(todo => todo._id !== todoId);
 
@@ -88,14 +94,16 @@ class TodoList extends React.Component {
       todos: arrayCopy
     });
   };
-  // MODAL ----------------------------------------------------------------------
+
+  // MODAL --------------------------------------------------------------------
   modalClose = () => {
     // closes modal
     this.setState({
       modalData: {}
     });
   };
-  // END MODAL ------------------------------------------------------------------
+  
+  // RENDER--------------------------------------------------------------------
   render() {
     const modalData = this.state.modalData;
     let modal;
@@ -116,16 +124,20 @@ class TodoList extends React.Component {
         </Modal>
       );
     }
-    const list = this.state.todos.length > 0 ? this.state.todos.map((currentTodo, i) => {
-      return (
-        <Todo
-          delete={this.delete}
-          editClick={this.editOnClick}
-          todo={currentTodo}
-          key={i}
-        />
-      );
-    }):"No Todos Found!";
+   
+    const list =
+      this.state.todos.length > 0
+        ? this.state.todos.map((currentTodo, i) => {
+            return (
+              <Todo
+                delete={this.delete}
+                editClick={this.editOnClick}
+                todo={currentTodo}
+                key={i}
+              />
+            );
+          })
+        : null;
 
     return (
       <div className="container">

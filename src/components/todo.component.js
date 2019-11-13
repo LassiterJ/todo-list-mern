@@ -1,8 +1,6 @@
 import React from "react";
 
 
-// import { Link } from "react-router-dom";
-
 class Todo extends React.Component {
   editOnClick = () => {
     this.props.editClick(this.props.todo)
@@ -10,18 +8,18 @@ class Todo extends React.Component {
   deleteOnClick = () => {
     this.props.delete(this.props.todo._id)
   }
-
+   
   render() {
-    
+    const isCompleted = this.props.todo.todoCompleted ? "completed" : "";
     return (
       <tr>
-        <td className={this.props.todo.todoCompleted ? "completed" : ""}>
+        <td className={isCompleted}>
           {this.props.todo.todoDescription}
         </td>
-        <td className={this.props.todo.todoCompleted ? "completed" : ""}>
+        <td className={isCompleted}>
           {this.props.todo.todoResponsibility}
         </td>
-        <td className={this.props.todo.todoCompleted ? "completed" : ""}>
+        <td className={isCompleted}>
           {this.props.todo.todoPriority}
         </td>
         <td>

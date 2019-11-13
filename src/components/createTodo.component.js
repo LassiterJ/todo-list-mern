@@ -1,6 +1,12 @@
 import React from "react";
 import * as $ from "axios";
 
+
+
+
+// Should I make a container component to separate render from logic?
+
+
 class CreateTodo extends React.Component {
   constructor(props) {
     super(props);

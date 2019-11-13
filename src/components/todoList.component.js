@@ -1,8 +1,8 @@
 import React from "react";
 export default class TodoList extends React.Component {
   
-  // RENDER--------------------------------------------------------------------
-  // Props required modal, createTodoClick, list
+  
+  // Props required: modal, createTodoClick, list
   render() {
     return (
       <div className="container">

@@ -107,10 +107,11 @@ class TodoListContainer extends React.Component {
   
   // RENDER--------------------------------------------------------------------
   render() {
+    //   I would like to clean up this render function. Currently researching best methods.
     const modalData = this.state.modalData;
     let modal;
 
-    if (this.state.modalData.todo === "new") {
+    if (modalData.todo === "new") {
       modal = (
         <Modal
           handleClose={this.modalClose}
@@ -119,7 +120,7 @@ class TodoListContainer extends React.Component {
           <CreateTodo onSubmitNew={this.onCreateNewTodoSubmitClick} />
         </Modal>
       );
-    } else if (this.state.modalData.todo) {
+    } else if (modalData.todo) {
       modal = (
         <Modal handleClose={this.modalClose}>
           {<EditTodo currentTodo={modalData} submitEdit={this.editOnSubmit} />}

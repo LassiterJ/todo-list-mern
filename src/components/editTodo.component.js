@@ -2,7 +2,11 @@ import React from "react";
 import * as $ from "axios";
 
 
-// Thinking I may have to lift the state...
+// Should I make a container component to separate render from logic?
+
+/* Also would a higher order component be ideal to use with both editTodo and createTodo components
+since they have similar data patterns?
+*/
 
 class EditTodo extends React.Component {
   constructor(props) {

@@ -1,9 +1,9 @@
 import React from "react";
-export default class TodoList extends React.Component {
-  
+
+
+export const TodoList = (props) =>{
   
   // Props required: modal, createTodoClick, list
-  render() {
     return (
       <div className="container">
         <h2>Todo List Header</h2>
@@ -17,13 +17,13 @@ export default class TodoList extends React.Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{this.props.list}</tbody>
+            <tbody>{props.list}</tbody>
           </table>
         </div>
-        <button onClick={this.props.createTodo}>Create New Todo</button>
-        {this.props.modal}
+        <button onClick={props.createTodo}>Create New Todo</button>
+        {props.modal}
       </div>
     );
   }
-}
+
 

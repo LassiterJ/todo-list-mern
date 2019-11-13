@@ -1,7 +1,7 @@
 import React from "react";
 import * as $ from "axios";
 
-import TodoList from "../components/todoList.component";
+import { TodoList } from "../components/todoList.component";
 import Todo from "../components/todo.component";
 import Modal from "../components/modal.component";
 import CreateTodo from "../components/createTodo.component";

@@ -107,7 +107,10 @@ class TodoListContainer extends React.Component {
   
   // RENDER--------------------------------------------------------------------
   render() {
+    // ************************************************************************
     //   I would like to clean up this render function. Currently researching best methods.
+    // ************************************************************************
+    
     const modalData = this.state.modalData;
     let modal;
 

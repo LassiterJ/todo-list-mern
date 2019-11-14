@@ -1,5 +1,6 @@
 import React from "react";
-
+import PropTypes from "prop-types";
+import Modal from "../components/modal.component"
 
 export const TodoList = (props) =>{
   
@@ -25,5 +26,9 @@ export const TodoList = (props) =>{
       </div>
     );
   }
-
+TodoList.propTypes = {
+  list: PropTypes.array,
+  createTodo: PropTypes.func,
+  modal: PropTypes.instanceOf(Modal)
+}
 

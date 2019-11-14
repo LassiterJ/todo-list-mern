@@ -1,13 +1,14 @@
 import React from "react";
 import * as $ from "axios";
+import PropTypes from "prop-types";
 
-
+// ****************************************************************************
 // Should I make a container component to separate render from logic?
 
 /* Also would a higher order component be ideal to use with both editTodo and createTodo components
 since they have similar data patterns?
 */
-
+// ****************************************************************************
 class EditTodo extends React.Component {
   constructor(props) {
     super(props);
@@ -100,6 +101,13 @@ class EditTodo extends React.Component {
       </div>
     );
   }
+}
+
+EditTodo.propTypes = {
+  todoCompleted: PropTypes.bool,
+  todoDescription: PropTypes.string,
+  todoPriority: PropTypes.string,
+  todoResponsibility: PropTypes.string
 }
 
 export default EditTodo;

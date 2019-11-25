@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "mongo": "mongod",
+    "mongo": "mongod --config /usr/local/etc/mongod.conf",
     "react-start": "react-scripts start",
     "build": "react-scripts build",
     "react-test": "react-scripts test",
